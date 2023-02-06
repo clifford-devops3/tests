@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "287336211777",
+    "project_id": "smartreplies-4e187",
+    "storage_bucket": "smartreplies-4e187.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:287336211777:android:aa59a74606c50e44c42dc0",
+        "android_client_info": {
+          "package_name": "com.example.smartreplies"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "287336211777-reeidrkmibs0ksrjosfbe3orqsobd2o8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWi8j-Mr-H6QW6GXL5_5UJlhTXBo99A20"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "287336211777-reeidrkmibs0ksrjosfbe3orqsobd2o8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
