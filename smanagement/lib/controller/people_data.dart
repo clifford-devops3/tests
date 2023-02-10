@@ -16,6 +16,7 @@ class PeopleDataProvider extends ChangeNotifier {
     final response = await http.get(uri);
 
     if (response.statusCode == 200) {
+      _people = [];
       final data = jsonDecode(response.body) as Map;
       (data['people'] as List)
           .forEach((person) => {_people.add(Person.fromJson(person))});
@@ -31,6 +32,7 @@ class PeopleDataProvider extends ChangeNotifier {
         headers: {'Content-Type': 'application/json'}, body: jsonEncode(body));
 
     if (response.statusCode == 200) {
+      _people = [];
       final data = jsonDecode(response.body) as Map;
       (data['people'] as List)
           .forEach((person) => {_people.add(Person.fromJson(person))});
@@ -44,10 +46,13 @@ class PeopleDataProvider extends ChangeNotifier {
     final response = await http.delete(uri);
 
     if (response.statusCode == 200) {
+      _people = [];
       final data = jsonDecode(response.body) as Map;
 
       (data['people'] as List)
           .forEach((person) => {_people.add(Person.fromJson(person))});
+
+      notifyListeners();
     }
   }
 }

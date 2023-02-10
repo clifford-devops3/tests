@@ -26,10 +26,25 @@ import "jquery/dist/jquery.min.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "datatables.net-dt/js/dataTables.dataTables";
 import "datatables.net-dt/css/jquery.dataTables.min.css";
+import 'datatables.net-buttons/js/dataTables.buttons.js'
+import 'datatables.net-buttons/js/buttons.html5.js'
+import 'datatables.net-buttons/js/buttons.print.js'
 import $ from "jquery";
 export default {
   mounted() {
-    $("#datatable").DataTable();
+    $("#datatable").DataTable({
+      buttons: [
+        {
+          extend: "pdf",
+          text: "Save current page",
+          exportOptions: {
+            modifier: {
+              page: "current",
+            },
+          },
+        },
+      ],
+    });
   },
   data: function () {
     return {
