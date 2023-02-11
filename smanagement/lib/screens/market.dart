@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:smanagement/controller/articles_data.dart';
-import 'package:smanagement/screens/home_page.dart';
-import 'package:smanagement/screens/Assets.dart';
+import 'package:smanagement/controller/forex_data.dart';
 import 'package:smanagement/shared/bottom_navigation.dart';
 
 class Market extends StatefulWidget {
@@ -13,47 +11,62 @@ class Market extends StatefulWidget {
 }
 
 class _MarketState extends State<Market> {
-  void allNews(BuildContext context) {
-    context.read<AlticlesProvider>().getAllNews();
-    final route = MaterialPageRoute(builder: (context) => HomePage());
-    Navigator.push(context, route);
-  }
-
-
   @override
   void initState() {
     // TODO: implement initState
-    context.read<AlticlesProvider>().getArticles();
+    context.read<ForexDataProvider>().getForex();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("Market")),
-      body: Container(
-        child: Consumer<AlticlesProvider>(builder: (context, value, child) {
-          return ListView.builder(
-              itemCount: value.articles.length,
-              itemBuilder: (BuildContext context, int index) {
-                int end = value.articles[index].body!.length < 100
-                    ? value.articles[index].body!.length
-                    : 100;
-
-                String imageurl = value.articles[index].imageurl != null
-                    ? value.articles[index].imageurl!
-                    : 'https://images.cryptocompare.com/news/default/livebitcoinnews.png?width=250';
-
-                return ListTile(
-                  leading: Container(child: Image.network(imageurl)),
-                  title: Text(value.articles[index].title!),
-                  subtitle: Text(
-                      '${value.articles[index].body!.substring(0, end)}...'),
-                );
-              });
-        }),
+    return DefaultTabController(
+      initialIndex: 1,
+      length: 3,
+      child: Scaffold(
+        appBar: AppBar(title: Text("Market")),
+        body: Column(
+          children: [
+            Expanded(
+                flex: 1,
+                child: Container(
+                  child: TabBar(tabs: [
+                    Tab(
+                      child:
+                          Text("Forex", style: TextStyle(color: Colors.black)),
+                    ),
+                    Tab(
+                      child:
+                          Text("Crypto", style: TextStyle(color: Colors.black)),
+                    ),
+                    Tab(
+                      child: Text("Favourite",
+                          style: TextStyle(color: Colors.black)),
+                    ),
+                  ]),
+                )),
+            Expanded(
+              flex: 9,
+              child: Container(
+                child: Consumer<ForexDataProvider>(
+                    builder: (context, value, child) {
+                  return ListView.builder(
+                      itemCount: value.forex.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return ListTile(
+                          leading: Text(value.forex[index].currency_code!),
+                          title: Text(value.forex[index].currency!),
+                          subtitle: Text(value.forex[index].country!),
+                          trailing: Text(value.forex[index].rate!.toString()),
+                        );
+                      });
+                }),
+              ),
+            ),
+          ],
+        ),
+        bottomNavigationBar: BottomNavigation(1),
       ),
-      bottomNavigationBar: BottomNavigation(1),
     );
   }
 }
