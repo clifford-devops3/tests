@@ -1,13 +1,30 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
-import 'package:smanagement/models/person_model.dart';
+import 'package:smanagement/models/user_model.dart';
 import "package:http/http.dart" as http;
 
-class PeopleDataProvider extends ChangeNotifier {
-  List<Person> _people = [];
+class UserDataProvider extends ChangeNotifier {
+  List<User> _users = <User>[];
+  final User _user = User(null, null, null, null);
+  
+  List<User> users = <User>[];
+  User get user => _user;
 
-  List<Person> get getPeople => _people;
+  Future<void> getUser() async {
+    const url = "http://localhost:5000";
+    final uri = Uri.parse(url);
+
+    final response = await http.get(uri);
+
+    if (response.statusCode == 200) {
+      _users = [];
+      final data = jsonDecode(response.body) as Map;
+      (data['people'] as List)
+          .forEach((person) => {_users.add(User.fromJson(person))});
+      notifyListeners();
+    }
+  }
 
   Future<void> getAllPeople() async {
     const url = "http://localhost:5000";
@@ -16,10 +33,10 @@ class PeopleDataProvider extends ChangeNotifier {
     final response = await http.get(uri);
 
     if (response.statusCode == 200) {
-      _people = [];
+      _users = [];
       final data = jsonDecode(response.body) as Map;
       (data['people'] as List)
-          .forEach((person) => {_people.add(Person.fromJson(person))});
+          .forEach((person) => {_users.add(User.fromJson(person))});
       notifyListeners();
     }
   }
@@ -32,10 +49,10 @@ class PeopleDataProvider extends ChangeNotifier {
         headers: {'Content-Type': 'application/json'}, body: jsonEncode(body));
 
     if (response.statusCode == 200) {
-      _people = [];
+      _users = [];
       final data = jsonDecode(response.body) as Map;
       (data['people'] as List)
-          .forEach((person) => {_people.add(Person.fromJson(person))});
+          .forEach((person) => {_users.add(User.fromJson(person))});
       notifyListeners();
     }
   }
@@ -46,11 +63,11 @@ class PeopleDataProvider extends ChangeNotifier {
     final response = await http.delete(uri);
 
     if (response.statusCode == 200) {
-      _people = [];
+      _users = [];
       final data = jsonDecode(response.body) as Map;
 
       (data['people'] as List)
-          .forEach((person) => {_people.add(Person.fromJson(person))});
+          .forEach((person) => {_users.add(User.fromJson(person))});
 
       notifyListeners();
     }

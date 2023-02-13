@@ -3,7 +3,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 import 'package:smanagement/controller/articles_data.dart';
-import 'package:smanagement/controller/people_data.dart';
+import 'package:smanagement/controller/user_data.dart';
 import 'package:smanagement/screens/home_page.dart';
 import 'package:smanagement/shared/bottom_navigation.dart';
 
@@ -18,7 +18,7 @@ class _AssetsState extends State<Assets> {
   @override
   void initState() {
     // TODO: implement initState
-    context.read<PeopleDataProvider>().getAllPeople();
+    context.read<UserDataProvider>().getAllPeople();
     super.initState();
   }
 
@@ -35,9 +35,9 @@ class _AssetsState extends State<Assets> {
       ),
       backgroundColor: Color.fromARGB(255, 247, 251, 251),
       body: Container(
-        child: Consumer<PeopleDataProvider>(builder: (context, value, child) {
+        child: Consumer<UserDataProvider>(builder: (context, value, child) {
           return ListView.builder(
-            itemCount: value.getPeople.length,
+            itemCount: value.users.length,
             itemBuilder: (BuildContext context, int index) {
               return ListTile(
                 title: Text("How are you doing"),
@@ -45,7 +45,7 @@ class _AssetsState extends State<Assets> {
                 trailing: MaterialButton(
                     child: Text("Delete"),
                     onPressed: () =>
-                        {value.deletePerson(value.getPeople[index].id!)}),
+                        {value.deletePerson(value.users[index].id!)}),
               );
             },
           );

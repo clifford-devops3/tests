@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:smanagement/screens/Assets.dart';
 import 'package:smanagement/screens/Feeds.dart';
+import 'package:smanagement/screens/forex_page.dart';
 import 'package:smanagement/screens/home_page.dart';
 import 'package:smanagement/screens/articles.dart';
-import 'package:smanagement/screens/market.dart';
 
 class BottomNavigation extends StatelessWidget {
   final int selected;
@@ -62,7 +60,7 @@ class BottomNavigation extends StatelessWidget {
       final route = MaterialPageRoute(builder: (context) => HomePage());
       Navigator.pushReplacement(context, route);
     } else if (index == 1) {
-      final route = MaterialPageRoute(builder: (context) => Market());
+      final route = MaterialPageRoute(builder: (context) => ForexPage()); //
       Navigator.pushReplacement(context, route);
     } else if (index == 2) {
       final route = MaterialPageRoute(builder: (context) => Articles());
