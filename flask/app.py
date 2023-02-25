@@ -116,10 +116,11 @@ def getUsers():
     return jsonify({"users": users_schema.dump(users)})
 
 
-@app.route('/', methods=['GET'])
+@app.route('/get-user', methods=['GET'])
 def getUser():
-    user = User.query.order_by(User.id.desc()).limit(1)
-    return jsonify({"user": user_schema.dump(user)})
+    user = User.query.order_by(User.id.desc()).all()
+
+    return jsonify({"user": user_schema.dump(user[0])})
 
 
 @app.route("/add-user", methods=['POST'])
